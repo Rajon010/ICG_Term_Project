@@ -4,7 +4,6 @@ using System.Collections;
 public class FallScript : MonoBehaviour {
 
 	public bool shot = false;
-	// if shot is true, then move pos from y = 0.25 (0) to -0.43 (-0.68)
 
 	private int BEFORE_FALL = 0;
 	private int FALLING = 1;
