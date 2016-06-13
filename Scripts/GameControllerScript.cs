@@ -12,6 +12,8 @@ public class GameControllerScript : MonoBehaviour
 	public Transform floor;
 	public Transform pillar;
 	public Transform light;
+    public Transform light2;
+    public Transform light3;
 	public Transform player;
 
 	public static int NONE = 0;
@@ -78,9 +80,14 @@ public class GameControllerScript : MonoBehaviour
 		for (int z = 0; z < 10; z++) {
 			for (int x = 0; x < 8; x++) {
 				if ((x - z) % 2 == 0) {
-					Instantiate (light, new Vector3 (x * 6 + 3, 3, z * 6 + 3), rotate_0);
-					//lights [z, x] = (Light) Instantiate (light, new Vector3 (x * 6 + 3, 3, z * 6 + 3), rotate_0);
-					//lights [z, x].color = new Color (UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value, 1);
+                    Transform lt;
+                    if (UnityEngine.Random.value < 0.7)
+                        lt = light;
+                    else if (UnityEngine.Random.value < 0.5)
+                        lt = light2;
+                    else
+                        lt = light3;
+					Instantiate (lt, new Vector3 (x * 6 + 3, 3, z * 6 + 3), rotate_0);
 				}
 				//Instantiate (floor, new Vector3 (x * 6 + 3, 6, z * 6 + 3), rotate_0);
 				Instantiate (floor, new Vector3 (x * 6 + 3, 0, z * 6 + 3), rotate_0);
