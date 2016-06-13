@@ -5,6 +5,7 @@ public class BowScript : MonoBehaviour {
 
 	public Rigidbody projcetile;
 	public float speed;
+	//public Transform playerCamera;
 
 	private int tick = 0;
 	// Use this for initialization
