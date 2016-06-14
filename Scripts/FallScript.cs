@@ -22,15 +22,16 @@ public class FallScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (shot == true && state == BEFORE_FALL)
+		if (shot && state == BEFORE_FALL)
 			state = FALLING;
-		if (state == FALLING) {
+		else if (state == FALLING) {
 			speed += g;
 			delta_y += speed;
 			if (delta_y >= -2.75)
 				transform.position = transform.position + new Vector3 (0, speed, 0);
 			else
 				state = AFTER_FALL;
-		}
+		}//else if(state == AFTER_FALL)
+			
 	}
 }
