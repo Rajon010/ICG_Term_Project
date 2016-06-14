@@ -56,9 +56,13 @@ public class GameControllerScript : MonoBehaviour
 	private bool[,] stick_state = new bool[9, 8];
 
 	public static int N = 0, E = 1, S = 2, W = 3;
-	private Vector3[] vector3 = new Vector3[4] {new Vector3(0, 0, 6), new Vector3(6, 0, 0), new Vector3(0, 0, -6), new Vector3(-6, 0, 0)};
+	//private Vector3[] vector3 = new Vector3[4] {new Vector3(0, 0, 6), new Vector3(6, 0, 0), new Vector3(0, 0, -6), new Vector3(-6, 0, 0)};
+	private Vector3[] vector3 = new Vector3[4] {new Vector3(0, 0, 0.04F), new Vector3(0.04F, 0, 0), new Vector3(0, 0, -0.04F), new Vector3(-0.04F, 0, 0)};
 	private int[,] translate_dir = new int[9, 8];
 	private Transform[,] stick_to_wall = new Transform[9, 8];
+	private bool[,] wall_moving = new bool[9, 8];
+	private int[] doors = new int[12]{61, 32, 44, 13, 14, 62, 85, 41, 16, 76, 56, 52};
+	private float[] moveing_distance_so_far = new float[12]; // may be int for tick
 
 	//private Light[,] lights = new Light[10, 8];
 
@@ -144,6 +148,20 @@ public class GameControllerScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		for (int i = 0; i < 12; i++){
+			int z = doors [i] / 10;
+			int x = doors [i] % 10;
+			if (wall_moving [z, x]) {
+				stick_to_wall [z, x].Translate (vector3[translate_dir[z,x]]);
+				moveing_distance_so_far [i]++;
+				if (moveing_distance_so_far [i] == 150) {
+					wall_moving [z, x] = false;
+					translate_dir [z, x] = (translate_dir [z, x] + 2) % 4;
+					moveing_distance_so_far [i] = 0;
+				}
+			}
+		}
+
 		if (Input.GetKeyDown (KeyCode.F)) {
 			Vector3 pos = player.position;
 			int x = (int)pos.x / 6;
@@ -158,14 +176,16 @@ public class GameControllerScript : MonoBehaviour
 			if (z == 5 && x == 2) {
 				along_z_draft [5, 2] = NONE;
 				along_z_draft [4, 2] = WSTK;
-				stick_to_wall [5, 2].Translate (vector3[S]);
+				//stick_to_wall [5, 2].Translate (vector3[S]);
+				wall_moving [5, 2] = true;
 				stick_to_wall [5, 2].Find ("Stick").Rotate (0, 0, 60);
 				return;
 			}
 			if (z == 4 && x == 2) {
 				along_z_draft [4, 2] = NONE;
 				along_z_draft [5, 2] = WSTK;
-				stick_to_wall [5, 2].Translate (vector3[N]);
+				//stick_to_wall [5, 2].Translate (vector3[N]);
+				wall_moving [5, 2] = true;
 				stick_to_wall [5, 2].Find ("Stick").Rotate (0, 0, -60);
 				return;
 			}
@@ -176,8 +196,10 @@ public class GameControllerScript : MonoBehaviour
 				dir = -1;
 			wstk.Find ("Stick").Rotate (0, 0, 60 * dir);
 			stick_state [z, x] = !stick_state [z, x];
-			stick_to_wall [z, x].Translate (vector3[translate_dir [z, x]]);
-			translate_dir [z, x] = (translate_dir [z, x] + 2) % 4;
+			wall_moving [z, x] = true;
+			//stick_to_wall [z, x].Translate (vector3[translate_dir [z, x]]);
+			//translate_dir [z, x] = (translate_dir [z, x] + 2) % 4;
 		}
+			
 	}
 }
