@@ -27,7 +27,11 @@ public class FallScript : MonoBehaviour {
 	void Update () {
 		if (shot && state == BEFORE_FALL) {
 			state = FALLING;
+
+			GetComponent<AudioSource>().Play ();
+
 		}else if (state == FALLING) {
+			
 			speed += g;
 			delta_y += speed;
 			if (delta_y >= -2.75)

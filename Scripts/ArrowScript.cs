@@ -18,6 +18,7 @@ public class ArrowScript : MonoBehaviour {
 	void OnCollisionEnter (Collision collision) {
 		if(collision.gameObject.tag == "Player"){
 			GameObject.Find ("FPSController").GetComponent<PlayerScript>().shot = true;
+			GetComponent<AudioSource>().Play ();
 			//GameObject.Find ("FirstPersonCharacter").GetComponent<FallScript>().shot = true;
 
 

@@ -5,6 +5,7 @@ public class BowScript : MonoBehaviour {
 
 	public Rigidbody projcetile;
 	public float speed;
+	public int timeInterval = 10;
 	//public Transform playerCamera;
 
 	private int tick = 0;
@@ -18,12 +19,14 @@ public class BowScript : MonoBehaviour {
 	void Update () {
 		tick++;
 
-		if(tick == 10)
+		if(tick == timeInterval)
 		{
 			tick = 0;
 			Rigidbody shoot = 
 				(Rigidbody)Instantiate(projcetile, transform.position + transform.TransformDirection(new Vector3(-1F, 0, 0.3F)), transform.rotation * Quaternion.Euler(0, 0, -90));
 			shoot.velocity = transform.TransformDirection(new Vector3(-speed, 0, 0));
+
+			GetComponent<AudioSource>().Play ();
 			//Physics.IgnoreCollision(transform.root.GetComponent<Collider>(), shoot.GetComponent<Collider>());
 		}
 

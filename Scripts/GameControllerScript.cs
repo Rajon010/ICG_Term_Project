@@ -4,6 +4,8 @@ using System;
 
 public class GameControllerScript : MonoBehaviour
 {
+	public AudioClip buttonClickSound;
+	public AudioClip doorOpenSound;
 
 	public Transform wall;
 	public Transform wallWithStick;
@@ -178,6 +180,12 @@ public class GameControllerScript : MonoBehaviour
 				along_z_draft [4, 2] = WSTK;
 				//stick_to_wall [5, 2].Translate (vector3[S]);
 				wall_moving [5, 2] = true;
+
+				GetComponent<AudioSource>().clip = buttonClickSound;
+				GetComponent<AudioSource>().Play ();
+				GetComponent<AudioSource>().clip = doorOpenSound;
+				GetComponent<AudioSource>().Play ();
+
 				stick_to_wall [5, 2].Find ("Stick").Rotate (0, 0, 60);
 				return;
 			}
@@ -186,6 +194,13 @@ public class GameControllerScript : MonoBehaviour
 				along_z_draft [5, 2] = WSTK;
 				//stick_to_wall [5, 2].Translate (vector3[N]);
 				wall_moving [5, 2] = true;
+
+				GetComponent<AudioSource>().clip = buttonClickSound;
+				GetComponent<AudioSource>().Play ();
+				GetComponent<AudioSource>().clip = doorOpenSound;
+				GetComponent<AudioSource>().Play ();
+
+
 				stick_to_wall [5, 2].Find ("Stick").Rotate (0, 0, -60);
 				return;
 			}
@@ -197,6 +212,13 @@ public class GameControllerScript : MonoBehaviour
 			wstk.Find ("Stick").Rotate (0, 0, 60 * dir);
 			stick_state [z, x] = !stick_state [z, x];
 			wall_moving [z, x] = true;
+
+			GetComponent<AudioSource>().clip = buttonClickSound;
+			GetComponent<AudioSource>().Play ();
+			GetComponent<AudioSource>().clip = doorOpenSound;
+			GetComponent<AudioSource>().Play ();
+
+
 			//stick_to_wall [z, x].Translate (vector3[translate_dir [z, x]]);
 			//translate_dir [z, x] = (translate_dir [z, x] + 2) % 4;
 		}
