@@ -176,6 +176,8 @@ public class GameControllerScript : MonoBehaviour
 			else
 				return;
 			if (z == 5 && x == 2) {
+				if (wall_moving [5, 2])
+					return;
 				along_z_draft [5, 2] = NONE;
 				along_z_draft [4, 2] = WSTK;
 				//stick_to_wall [5, 2].Translate (vector3[S]);
@@ -190,6 +192,8 @@ public class GameControllerScript : MonoBehaviour
 				return;
 			}
 			if (z == 4 && x == 2) {
+				if (wall_moving [5, 2])
+					return;
 				along_z_draft [4, 2] = NONE;
 				along_z_draft [5, 2] = WSTK;
 				//stick_to_wall [5, 2].Translate (vector3[N]);
@@ -204,6 +208,8 @@ public class GameControllerScript : MonoBehaviour
 				stick_to_wall [5, 2].Find ("Stick").Rotate (0, 0, -60);
 				return;
 			}
+			if (wall_moving [z, x])
+				return;
 			int dir;
 			if (stick_state [z, x] == false)
 				dir = 1;
